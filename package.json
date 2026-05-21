@@ -1,13 +1,13 @@
 {
   "name": "@brime-ai/brime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official Node.js / TypeScript SDK for the Brime API (search · extract · research)",
   "license": "MIT",
   "author": "Brime",
   "homepage": "https://brime.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brime-dev/brime-node.git"
+    "url": "git+https://github.com/brime-dev/brime-node.git"
   },
   "bugs": {
     "url": "https://github.com/brime-dev/brime-node/issues"
@@ -29,18 +29,27 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
+    "dist/**/*.cjs",
+    "dist/**/*.mjs",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.cts",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
   ],
+  "sideEffects": false,
   "engines": {
     "node": ">=18.0.0"
   },
@@ -51,15 +60,21 @@
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:live": "vitest run tests/e2e",
-    "prepublishOnly": "npm run build"
+    "lint:types": "attw --pack .",
+    "lint:publish": "publint",
+    "lint:pkg": "npm run lint:publish",
+    "prepublishOnly": "npm run build && npm run lint:pkg"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@types/node": "~20.11.0",
+    "publint": "^0.3.0",
     "tsup": "~8.3.0",
     "typescript": "~5.5.0",
     "vitest": "~2.1.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   }
 }

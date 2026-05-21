@@ -1,12 +1,19 @@
-# brime
+# @brime-ai/brime
+
+[![npm](https://img.shields.io/npm/v/@brime-ai/brime.svg?logo=npm)](https://www.npmjs.com/package/@brime-ai/brime)
+[![types](https://img.shields.io/npm/types/@brime-ai/brime.svg?logo=typescript)](./dist/index.d.ts)
+[![provenance](https://img.shields.io/badge/provenance-attested-2ea44f?logo=github)](https://docs.npmjs.com/generating-provenance-statements/)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 **The live-web toolkit for AI apps.** One API key. One SDK. Search, scrape, and research the open web — clean output, sane defaults, no plumbing.
+
+**[Documentation](https://docs.brime.dev/sdks/nodejs)** | **[Get Your API Key](https://platform.brime.dev/keys)** | **[Changelog](./CHANGELOG.md)** | **[GitHub](https://github.com/brime-dev/brime-node)**
 
 ```bash
 npm install @brime-ai/brime
 ```
 
-Built for Node.js 18+, Bun, Deno, Cloudflare Workers, and modern browsers. Native `fetch`, zero HTTP dependencies, ESM + CJS + full TypeScript types.
+Built for Node.js 18+, Bun, Deno, Cloudflare Workers, and modern browsers. Native `fetch`, zero HTTP dependencies, ESM + CJS + full TypeScript types. Every release ships with [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) provenance.
 
 ## Why brime?
 

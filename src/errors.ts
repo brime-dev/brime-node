@@ -34,6 +34,11 @@ export class NotFoundError extends BrimeError {}
 export class UpstreamError extends BrimeError {}
 export class InternalError extends BrimeError {}
 
+/** Network-level failure (DNS, ECONNRESET, TLS, etc.). status=0, code="connection_error". */
+export class ConnectionError extends BrimeError {}
+/** Request aborted because the configured timeout fired. status=0, code="timeout". */
+export class TimeoutError extends BrimeError {}
+
 const CODE_TO_CLASS: Record<string, typeof BrimeError> = {
   unauthorized: AuthenticationError,
   rate_limited: RateLimitError,
@@ -91,11 +96,32 @@ export function exceptionFromResponse(
   return new Cls(message, { status, code, details: err.details, requestId });
 }
 
-/** Build a BrimeError from a transport-level failure (network, abort, DNS). */
-export function wrapTransportError(exc: unknown): BrimeError {
+/**
+ * Build a BrimeError from a transport-level failure. Distinguishes:
+ *   - aborted (AbortError / signal aborted) → TimeoutError, when the abort
+ *     originated from our timeout signal; otherwise a ConnectionError
+ *     ("request aborted")
+ *   - everything else (DNS, TLS, ECONNRESET, ...) → ConnectionError
+ */
+export function wrapTransportError(exc: unknown, opts: { timedOut?: boolean } = {}): BrimeError {
   const msg = exc instanceof Error ? exc.message : String(exc);
-  return new InternalError(`network error: ${msg}`, {
+  if (opts.timedOut) {
+    return new TimeoutError(`request timed out: ${msg}`, {
+      status: 0,
+      code: "timeout",
+    });
+  }
+  const isAbort =
+    exc instanceof Error &&
+    (exc.name === "AbortError" || /aborted/i.test(exc.message));
+  if (isAbort) {
+    return new ConnectionError(`request aborted: ${msg}`, {
+      status: 0,
+      code: "connection_error",
+    });
+  }
+  return new ConnectionError(`network error: ${msg}`, {
     status: 0,
-    code: "internal_error",
+    code: "connection_error",
   });
 }

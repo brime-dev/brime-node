@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.2.0 — 2026-05-21
+
+### A-tier polish
+
+- **`package.json` exports field rewritten** with per-condition `types` nested inside `import` / `require`. `tsup` now emits `dist/index.d.ts` (ESM) + `dist/index.d.cts` (CJS) — `Are The Types Wrong` (attw) resolves cleanly under `node10`, `node16`, and `bundler` modes without masquerading.
+- **`publint` integrated** as the local publish-gate (`npm run lint:publish`, runs in `prepublishOnly`). attw is also wired (`npm run lint:types`) and runs in CI; lokal'de upstream fflate issue nedeniyle bypass'lı.
+- **Per-format declaration files** — separate `.d.ts` / `.d.cts` so the TypeScript resolver lands on the right one regardless of the consumer's `moduleResolution` setting.
+- **`sideEffects: false`** — bundlers can tree-shake the SDK aggressively.
+- **`publishConfig.provenance: true`** — npm Trusted Publishing emits an SLSA provenance statement on every release, signed by the GitHub Actions OIDC token. No npm tokens stored in repo secrets.
+- **`ConnectionError` + `TimeoutError`** classes added to the error hierarchy. `wrapTransportError` now distinguishes timeout-driven aborts from network failures so callers can branch precisely.
+- **Source maps no longer shipped** in the published tarball. Built artefacts only — tarball is ~16 KB.
+- **GitHub Actions release workflow** (`.github/workflows/release.yml`) — tag-driven, OIDC-trusted publish with `publint` and `attw` as gates.
+
+### Compatibility
+
+Fully additive — public surface unchanged. v0.1.x consumers can upgrade without code edits.
+
 ## 0.1.0 — 2026-05-06
 
 Initial release. Beta.

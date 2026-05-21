@@ -6,7 +6,11 @@ export default defineConfig({
   outExtension({ format }) {
     return { js: format === "cjs" ? ".cjs" : ".mjs" };
   },
-  dts: true,
+  // Per-format .d.mts + .d.cts so the package.json exports field can carry
+  // a `types` condition inside each branch — "Are The Types Wrong" then
+  // resolves the right declaration file in both node10 and node16 modes
+  // without masquerading.
+  dts: { resolve: true },
   sourcemap: true,
   clean: true,
   splitting: false,
