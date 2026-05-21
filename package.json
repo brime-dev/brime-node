@@ -1,5 +1,5 @@
 {
-  "name": "brime",
+  "name": "@brime-ai/brime",
   "version": "0.1.0",
   "description": "Official Node.js / TypeScript SDK for the Brime API (search · extract · research)",
   "license": "MIT",

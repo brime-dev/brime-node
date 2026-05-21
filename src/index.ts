@@ -3,7 +3,7 @@
  *
  * @example
  * ```ts
- * import { Brime } from "brime";
+ * import { Brime } from "@brime-ai/brime";
  *
  * const client = new Brime({ apiKey: "sk-brime-..." });
  * const result = await client.search({ query: "BM25 ranking" });

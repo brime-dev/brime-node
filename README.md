@@ -3,7 +3,7 @@
 **The live-web toolkit for AI apps.** One API key. One SDK. Search, scrape, and research the open web — clean output, sane defaults, no plumbing.
 
 ```bash
-npm install brime
+npm install @brime-ai/brime
 ```
 
 Built for Node.js 18+, Bun, Deno, Cloudflare Workers, and modern browsers. Native `fetch`, zero HTTP dependencies, ESM + CJS + full TypeScript types.
@@ -18,7 +18,7 @@ Built for Node.js 18+, Bun, Deno, Cloudflare Workers, and modern browsers. Nativ
 ## 30 seconds
 
 ```ts
-import { Brime } from "brime";
+import { Brime } from "@brime-ai/brime";
 
 const brime = new Brime(); // reads BRIME_API_KEY
 
@@ -101,7 +101,7 @@ import type {
   ExtractResponse,
   ResearchBasicResponse,
   ResearchSseEvent,
-} from "brime";
+} from "@brime-ai/brime";
 ```
 
 ## Error handling
@@ -114,7 +114,7 @@ import {
   RateLimitError,
   InsufficientCreditsError,
   BrimeError,
-} from "brime";
+} from "@brime-ai/brime";
 
 try {
   await brime.search({ query: "..." });
